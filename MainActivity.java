@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 loadTab(R.id.web, tab);
                 return true;
 
-            case (R.id.back):// back
+            case (R.id.previous):// back
                 if(count > 1){
                     count--;
                     loadTab(R.id.web, savedURLS.get(count-1));
