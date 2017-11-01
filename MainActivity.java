@@ -41,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
+        Fragment tab = WebFragment.newInstance();
         switch(id){
 
             case (R.id.newTab): //new tab
-                Fragment tab = WebFragment.newInstance();
+                tab = WebFragment.newInstance();
                 savedURLS.add(tab);
                 count++;
                 loadTab(R.id.web, tab);
@@ -80,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                     count++;
+                }
+                else{ //if no tab ahead, create new one
+                    tab = WebFragment.newInstance();
+                    savedURLS.add(tab);
+                    count++;
+                    loadTab(R.id.web, tab);
                 }
                 return true;
             default:
