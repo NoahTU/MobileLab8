@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout page;
     private ArrayList<Fragment> savedURLS;
     private int count;
+    Fragment tab = WebFragment.newInstance("");
+    EditText urlInput;
+    WebView search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,37 @@ public class MainActivity extends AppCompatActivity {
 
         page = (FrameLayout) findViewById(R.id.web);
 
+
+
         savedURLS = new ArrayList<>();
         count = 0;
+
+        //Fragment tab = WebFragment.newInstance();
+
+        String test=getIntent().getDataString();
+
+        if (test !=null){
+            System.out.println("Yo");
+            System.out.println(test);
+            tab = WebFragment.newInstance(test);
+            savedURLS.add(tab);
+            count++;
+            loadTab(R.id.web, tab);
+
+            //onOptionsItemSelected(R.id.newTab);
+
+
+           search = (WebView) findViewById(R.id.browser);
+           // urlInput = (EditText) findViewById(R.id.url);
+
+           String url = test;
+           // urlInput.setText(test);
+
+            WebDataHandler urlData = new WebDataHandler(search);
+            urlData.execute(url);
+
+            //return true;
+        }
     }
 
     @Override
@@ -41,11 +73,28 @@ public class MainActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Fragment tab = WebFragment.newInstance();
+
+       /*if (!getIntent().getData().toString().equals(null)){
+            tab = WebFragment.newInstance();
+            savedURLS.add(tab);
+            count++;
+            loadTab(R.id.web, tab);
+
+            EditText urlInput = (EditText) findViewById(R.id.url);
+            WebView search = (WebView) findViewById(R.id.browser);
+
+            String url = getIntent().getData().toString();
+
+            WebDataHandler urlData = new WebDataHandler(search);
+            urlData.execute(url);
+            return true;
+        }*/
+
+
         switch(id){
 
             case (R.id.newTab): //new tab
-                tab = WebFragment.newInstance();
+                tab = WebFragment.newInstance("");
                 savedURLS.add(tab);
                 count++;
                 loadTab(R.id.web, tab);
@@ -56,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
                     count--;
                     loadTab(R.id.web, savedURLS.get(count-1));
 
-                    EditText urlInput = (EditText) findViewById(R.id.url);
-                    WebView search = (WebView) findViewById(R.id.browser);
+                    urlInput = (EditText) findViewById(R.id.url);
+                    search = (WebView) findViewById(R.id.browser);
 
                     String url = urlInput.getText().toString();
 
@@ -71,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
                     loadTab(R.id.web, savedURLS.get(count));
 
 
-                    EditText urlInput = (EditText) findViewById(R.id.url);
-                    WebView search = (WebView) findViewById(R.id.browser);
+                    urlInput = (EditText) findViewById(R.id.url);
+                    search = (WebView) findViewById(R.id.browser);
 
                     String url = urlInput.getText().toString();
 
@@ -83,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     count++;
                 }
                 else{ //if no tab ahead, create new one
-                    tab = WebFragment.newInstance();
+                    tab = WebFragment.newInstance("");
                     savedURLS.add(tab);
                     count++;
                     loadTab(R.id.web, tab);
